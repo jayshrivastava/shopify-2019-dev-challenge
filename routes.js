@@ -28,19 +28,26 @@ module.exports = function(app){
             res.send('400 Bad Request This route requires a valid Id param');
         }
 
-        result = await cartCtrl.addProduct(id);
+        let result = await cartCtrl.addProduct(id);
 
         if (result == 1) {
-
             res.send('A product with that Id does not exist');
         }
 
         if (result == 2) {
-
             res.send('You cannot add any more of that item because your cart already contains the maximum quanitity');
         }
 
         res.redirect('/cart');
+    });
+
+    app.post('/cart/finalize', async function (req, res) {
+
+        let result = await cartCtrl.finalize();
+
+        const products  = await productsCtrl.getAll();
+
+        res.send(products);
     });
 
     app.get('/cart', async function (req, res) {

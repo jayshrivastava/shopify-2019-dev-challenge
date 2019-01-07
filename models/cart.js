@@ -19,9 +19,15 @@ class CartModel extends Base {
             .update({ quantity: value })
     }
 
+    static deleteItem(id) {
+        return this.query()
+            .where({ id: id })
+            .del()
+    }
+
     static addItem(id) {
         return this.query()
-            .insert({ productid: id, quantity: 1})
+            .insert({ product_id: id, quantity: 1})
     }
 }
 

@@ -9,6 +9,26 @@ class CartCtrl {
         return products;
     }
 
+    static async finalize() {
+
+        const cartItems = await cartModel.getAll();
+
+        const products = await productModel.getAll();
+
+        _.forEach(cartItems, async (item) => {
+
+            let product = _.find(products, (product) => {
+                return product.id == item.product_id;
+            });
+
+            let result = await productModel.updateQuantity(item.product_id, product.inventory_count - item.quantity);
+
+            let result2 = await cartModel.deleteItem(item.id);
+        });
+
+        return;
+    }
+
     static async addProduct(id) {
 
         let availableProducts = await productModel.getAll();

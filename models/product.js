@@ -12,6 +12,12 @@ class ProductModel extends Base {
     static getAll() {
         return this.query().orderBy(this.idColumn);
     }
+
+    static updateQuantity(id, value) {
+        return this.query()
+            .where({ id: id })
+            .update({ inventory_count: value })
+    }
 }
 
 module.exports = ProductModel;
