@@ -1,6 +1,6 @@
 const Base = require('./base')
 
-class Product extends Base {
+class ProductModel extends Base {
     static get tableName() {
         return 'products';
     }
@@ -14,4 +14,4 @@ class Product extends Base {
     }
 }
 
-module.exports = Product;
+module.exports = ProductModel;

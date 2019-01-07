@@ -9,4 +9,11 @@ module.exports = function(app){
         res.send(allProducts);
     });
 
+    app.get('/available', async function (req, res) {
+    
+        const allAvailableProducts = await productsCtrl.getAllAvailable();
+
+        res.send(allAvailableProducts);
+    });
+
 }

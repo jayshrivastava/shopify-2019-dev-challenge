@@ -15,7 +15,7 @@ var knex = require('knex')({
 
 Model.knex(knex);
 
-class Base extends Model {
+class BaseModel extends Model {
 }
 
-module.exports = Base;
+module.exports = BaseModel;
