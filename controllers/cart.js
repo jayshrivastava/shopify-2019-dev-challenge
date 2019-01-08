@@ -21,7 +21,7 @@ class CartCtrl {
         });
 
         cartItems.push({
-            totalPrice: price
+            total_price: price
         });
 
         return cartItems;

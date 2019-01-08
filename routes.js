@@ -7,9 +7,20 @@ module.exports = function(app){
 
     app.get('/products', async function (req, res) {
     
-        const allProducts  = await productsCtrl.getAll();
+        let products; 
 
-        res.send(allProducts);
+        const { available } = req.query;
+
+        let isTrueSet = (available == 'true');
+
+        if (isTrueSet == false) {
+
+            products = await productsCtrl.getAllAvailable();
+        } else {
+
+            products  = await productsCtrl.getAll();
+        }
+        res.send(products);
     });
 
     app.get('/products/available', async function (req, res) {
