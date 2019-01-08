@@ -13,6 +13,7 @@ class CartCtrl {
         _.forEach(cartItems, (item) => {
 
             let p = _.find(products, (product) => {
+
                 return product.id == item.product_id;
             });
 
@@ -36,6 +37,7 @@ class CartCtrl {
         _.forEach(cartItems, async (item) => {
 
             let product = _.find(products, (product) => {
+
                 return product.id == item.product_id;
             });
 
@@ -44,9 +46,7 @@ class CartCtrl {
             let result2 = await cartModel.deleteItem(item.id);
         });
 
-        const result  = await productModel.getAll();
-
-        return result;
+        return;
     }
 
     static async addProduct(id) {
@@ -58,6 +58,7 @@ class CartCtrl {
         // Check for Existance
 
         let item = _.find(availableProducts, (product) => {
+
             return product.id == id;
         });
         
@@ -80,10 +81,10 @@ class CartCtrl {
             cartItem.quantity += 1;
     
             let result = await cartModel.updateQuantity(cartItem.id, cartItem.quantity);
-
         } else {
 
             if (item.inventory_count == 0) {
+
                 return 3;
             }
 
@@ -91,6 +92,7 @@ class CartCtrl {
         }
 
         let products = await this.getAll();
+
         return products;
     }
 }

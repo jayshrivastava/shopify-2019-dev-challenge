@@ -1,7 +1,7 @@
 const productsCtrl = require('./controllers/product');
 const cartCtrl = require('./controllers/cart')
-const Boom = require('boom');
 const _ = require('lodash');
+const Joi = require('joi');
 
 module.exports = function(app){
 
@@ -11,48 +11,48 @@ module.exports = function(app){
 
         const { available } = req.query;
 
-        let isTrueSet = (available == 'true');
+        let isTrueSet = (available === 'true');
 
-        if (isTrueSet == false) {
+        if (isTrueSet === true) {
 
             products = await productsCtrl.getAllAvailable();
         } else {
 
-            products  = await productsCtrl.getAll();
+            products = await productsCtrl.getAll();
         }
+
         res.send(products);
-    });
-
-    app.get('/products/available', async function (req, res) {
-    
-        const allAvailableProducts = await productsCtrl.getAllAvailable();
-
-        res.send(allAvailableProducts);
     });
 
     app.get('/cart/add', async function (req, res) {
 
-        const { id } = req.query;
+        let { id } = req.query;
 
-        if (!id) {
+        const schema = Joi.number().integer();
+
+        if (!id || !_.isNull(schema.validate(id).error)) {
 
             res.send('400 Bad Request This route requires a valid Id param');
         }
 
         let result = await cartCtrl.addProduct(id);
 
+        // No product w/ that ID exists
         if (result == 1) {
             res.send('A product with that Id does not exist');
         }
 
+        // Max Quantity already added to cart
         if (result == 2) {
             res.send('You cannot add any more of that item because your cart already contains the maximum quanitity');
         }
 
-        if (result == 2) {
+        // Item is out of stock
+        if (result == 3) {
             res.send('That item is out of stock');
         }
 
+        // returns cart
         res.send(result);
     });
 
@@ -60,7 +60,9 @@ module.exports = function(app){
 
         let result = await cartCtrl.finalize();
 
-        res.send(result);
+        let products = await productsCtrl.getAll();
+
+        res.send(products);
     });
 
     app.get('/cart', async function (req, res) {
@@ -70,7 +72,7 @@ module.exports = function(app){
         res.send(cart);
     });
 
-    app.get('/products/seed', async function (req, res) {
+    app.get('/seed', async function (req, res) {
 
         const result = await productsCtrl.seed();
 

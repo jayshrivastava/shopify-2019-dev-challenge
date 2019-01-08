@@ -10,7 +10,8 @@ class CartModel extends Base {
     }
     
     static getAll() {
-        return this.query().orderBy(this.idColumn);
+        return this.query()
+            .orderBy(this.idColumn);
     }
 
     static updateQuantity(id, value) {
