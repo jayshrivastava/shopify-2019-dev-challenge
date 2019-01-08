@@ -3,8 +3,9 @@ const cartModel = require('./../models/cart');
 const _ = require('lodash');
 
 class ProductCtrl {
+    
     static getAll() {
-        
+
         const products = productsModel.getAll();
 
         return products;
