@@ -1,6 +1,7 @@
 const Base = require('./base')
 
 class ProductModel extends Base {
+    
     static get tableName() {
         return 'products';
     }
