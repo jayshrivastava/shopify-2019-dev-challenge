@@ -33,10 +33,6 @@ class CartCtrl {
 
         let availableProducts = await productModel.getAll();
 
-        availableProducts = _.filter(availableProducts, (product) => {
-            return product.inventory_count !== 0;
-        });
-
         let currentCart = await cartModel.getAll();
 
         // Check for Existance
@@ -52,14 +48,13 @@ class CartCtrl {
         // Check Quanitities
         let cartItem = _.find(currentCart, (product) => {
 
-            return product.id == id;
+            return product.product_id == id;
         });
 
         if (cartItem) {
 
             if (cartItem.quantity + 1 > item.inventory_count) {
 
-                console.log('yo');
                 return 2;
             }
             cartItem.quantity += 1;
@@ -67,6 +62,10 @@ class CartCtrl {
             let result = await cartModel.updateQuantity(cartItem.id, cartItem.quantity);
 
         } else {
+
+            if (item.inventory_count == 0) {
+                return 3;
+            }
 
             let result = await cartModel.addItem(item.id);
         }

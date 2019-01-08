@@ -19,7 +19,7 @@ module.exports = function(app){
         res.send(allAvailableProducts);
     });
 
-    app.post('/cart/add', async function (req, res) {
+    app.get('/cart/add', async function (req, res) {
 
         const { id } = req.query;
 
@@ -38,10 +38,14 @@ module.exports = function(app){
             res.send('You cannot add any more of that item because your cart already contains the maximum quanitity');
         }
 
-        res.redirect('/cart');
+        if (result == 2) {
+            res.send('That item is out of stock');
+        }
+
+        res.send(result);
     });
 
-    app.post('/cart/finalize', async function (req, res) {
+    app.get('/cart/complete', async function (req, res) {
 
         let result = await cartCtrl.finalize();
 
@@ -55,5 +59,12 @@ module.exports = function(app){
         const cart  = await cartCtrl.getAll();
 
         res.send(cart);
+    });
+
+    app.get('/products/seed', async function (req, res) {
+
+        const result = await productsCtrl.seed();
+
+        res.send(result);
     });
 }

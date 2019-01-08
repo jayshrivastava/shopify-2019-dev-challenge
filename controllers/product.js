@@ -17,6 +17,19 @@ class ProductCtrl {
 
         return products;
     }
+
+    static async seed() {
+
+        let result = await productsModel.restoreA();
+        result = await productsModel.restoreB();
+        result = await productsModel.restoreC();
+        result = await productsModel.restoreD();
+
+
+        let products = await productsModel.getAll();
+
+        return products;
+    }
 }
 
 module.exports = ProductCtrl;
