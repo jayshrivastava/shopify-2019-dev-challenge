@@ -49,9 +49,7 @@ module.exports = function(app){
 
         let result = await cartCtrl.finalize();
 
-        const products  = await productsCtrl.getAll();
-
-        res.send(products);
+        res.send(result);
     });
 
     app.get('/cart', async function (req, res) {

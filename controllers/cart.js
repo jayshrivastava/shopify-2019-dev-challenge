@@ -3,10 +3,28 @@ const productModel = require('../models/product');
 const _ = require('lodash');
 
 class CartCtrl {
-    static getAll() {
-        const products = cartModel.getAll();
+    static async getAll() {
+        const cartItems = await cartModel.getAll();
 
-        return products;
+        const products = await productModel.getAll();
+
+        let price = 0;
+
+        _.forEach(cartItems, (item) => {
+
+            let p = _.find(products, (product) => {
+                return product.id == item.product_id;
+            });
+
+            price += p.price * item.quantity;
+
+        });
+
+        cartItems.push({
+            totalPrice: price
+        });
+
+        return cartItems;
     }
 
     static async finalize() {
@@ -26,7 +44,9 @@ class CartCtrl {
             let result2 = await cartModel.deleteItem(item.id);
         });
 
-        return;
+        const result  = await productModel.getAll();
+
+        return result;
     }
 
     static async addProduct(id) {
@@ -70,7 +90,7 @@ class CartCtrl {
             let result = await cartModel.addItem(item.id);
         }
 
-        let products = await cartModel.getAll();
+        let products = await this.getAll();
         return products;
     }
 }
