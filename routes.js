@@ -79,7 +79,7 @@ module.exports = function(app){
         res.send(result);
     });
 
-    app.get('/' function(req, res) {
+    app.get('/', function(req, res) {
 
         res.send('Hello! Welcome to my demo store. To get started, take a look at my docs: https://docs.google.com/document/d/10cMZbEKedTUVhjr9BGujyjxBn--PgvurcqpknggAfYA/edit?usp=sharing');
     });
