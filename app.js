@@ -4,12 +4,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 
-const port = 5000;
+const port = process.env.port || 5000;
 
 require('./routes')(app);
 
 // configure middleware
-app.set('port', process.env.port || port); // set express to use this port
+// app.set('port', process.env.port || port); // set express to use this port
 app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
 app.set('view engine', 'ejs'); // configure template engine
 app.use(bodyParser.urlencoded({ extended: false }));
