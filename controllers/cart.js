@@ -88,7 +88,7 @@ class CartCtrl {
                 return 3;
             }
 
-            let result = await cartModel.addItem(item.id);
+            let result = await cartModel.addItem(item.id, item.title);
         }
 
         let products = await this.getAll();

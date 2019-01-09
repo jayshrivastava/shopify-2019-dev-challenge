@@ -1,7 +1,7 @@
 const Base = require('./base')
 
 class CartModel extends Base {
-    
+
     static get tableName() {
         return 'cart';
     }
@@ -27,9 +27,9 @@ class CartModel extends Base {
             .del()
     }
 
-    static addItem(id) {
+    static addItem(id, title) {
         return this.query()
-            .insert({ product_id: id, quantity: 1})
+            .insert({ product_id: id, quantity: 1, title: title})
     }
 }
 
