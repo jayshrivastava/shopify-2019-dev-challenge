@@ -1,7 +1,7 @@
 const Base = require('./base')
 
 class ProductModel extends Base {
-    
+
     static get tableName() {
         return 'products';
     }
@@ -44,6 +44,17 @@ class ProductModel extends Base {
         .update({ inventory_count: 0 })
     }
 
+    static restoreE() {
+        return this.query()
+        .where({ id: 5})
+        .update({ inventory_count: 5 })
+    }
+
+    static restoreF() {
+        return this.query()
+        .where({ id: 6 })
+        .update({ inventory_count: 5 })
+    }
 }
 
 module.exports = ProductModel;

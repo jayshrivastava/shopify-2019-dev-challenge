@@ -3,7 +3,7 @@ const cartModel = require('./../models/cart');
 const _ = require('lodash');
 
 class ProductCtrl {
-    
+
     static getAll() {
 
         const products = productsModel.getAll();
@@ -29,6 +29,8 @@ class ProductCtrl {
         result = await productsModel.restoreB();
         result = await productsModel.restoreC();
         result = await productsModel.restoreD();
+        result = await productsModel.restoreE();
+        result = await productsModel.restoreF();
 
         const cartItems = await cartModel.getAll();
 
