@@ -28,6 +28,25 @@ class CartCtrl {
         return cartItems;
     }
 
+    static async updatePrice(){
+
+        const cartItems = await cartModel.getAll();
+
+        let price = 0;
+
+        _.forEach(cartItems, (item) => {
+
+            let p = _.find(products, (product) => {
+
+                return product.id == item.product_id;
+            });
+
+            price += p.price * item.quantity;
+
+        });
+
+    }
+
     static async finalize() {
 
         const cartItems = await cartModel.getAll();

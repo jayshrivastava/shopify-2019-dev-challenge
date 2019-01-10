@@ -3,7 +3,12 @@ const Base = require('./base')
 class CartModel extends Base {
 
     static get tableName() {
-        return 'cart';
+        return 'cartitems';
+    }
+
+    // Cart ID Defaults to 1 since there is only 1 cart
+    static get cartId() {
+        return 1;
     }
 
     static get idColumn() {
@@ -12,6 +17,7 @@ class CartModel extends Base {
     
     static getAll() {
         return this.query()
+            .leftJoin('cart', 'cartitems.cart_id', 'cart.id')
             .orderBy(this.idColumn);
     }
 
@@ -29,7 +35,12 @@ class CartModel extends Base {
 
     static addItem(id, title) {
         return this.query()
-            .insert({ product_id: id, quantity: 1, title: title})
+            .insert({ 
+                product_id: id, 
+                quantity: 1, 
+                title: title, 
+                cart_id: this.cartId
+            })
     }
 }
 
